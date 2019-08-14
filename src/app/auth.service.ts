@@ -31,7 +31,9 @@ export class AuthService {
   }
 
   logoutUser() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    if (confirm("¿Esta seguro de cerrar sesion?")) {
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
+    }
   }
 }

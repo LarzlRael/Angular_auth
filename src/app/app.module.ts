@@ -16,6 +16,8 @@ import { AuthService } from './auth.service';
 import { EventService } from './event.service';
 import { AuthGuard } from './guard/auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { TokenInterceptorService } from './token-interceptor.service';
     RegisterComponent,
     LoginComponent,
     EventsComponent,
-    SpecialEventsComponent
+    SpecialEventsComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -32,13 +35,17 @@ import { TokenInterceptorService } from './token-interceptor.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService,
+  providers: [
+    AuthService,
     EventService,
     AuthGuard, {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }],
-  bootstrap: [AppComponent]
+    },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
